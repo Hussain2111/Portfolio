@@ -79,25 +79,25 @@ const EXCLUDE = new Set(
 // changes what visitors see.
 const PINNED_PROJECTS = [
   {
+    name: 'Cairn',
+    description: 'A personal planning tool that breaks big goals into stages that unlock one at a time, so there is always exactly one next small task to do. Built-in spaced-repetition review keeps what you learn from slipping away.',
+    html_url: 'https://github.com/Hussain2111/Cairn',
+    homepage: 'https://hussain2111.github.io/Cairn/',
+    tags: ['JavaScript', 'PWA'],
+  },
+  {
     name: 'Trellis',
-    description: 'An Instagram coach that pulls your own account’s analytics straight from the Graph API, benchmarks them against a scraped competitor pool, and surfaces the one gap worth fixing next — with the numbers behind every claim.',
+    description: 'An Instagram coach that pulls your own account’s analytics straight from the Graph API, benchmarks them against a scraped competitor pool, and surfaces the one gap worth fixing next, with the numbers behind every claim.',
     html_url: 'https://github.com/Hussain2111/trellis',
     homepage: null,
     tags: ['TypeScript', 'Next.js', 'Postgres', 'Vercel'],
   },
   {
     name: 'CodeLens',
-    description: 'Turns a photo of code into a usable source file — a FastAPI backend extracts and cleans the text, with a Vite/React frontend for capturing, reviewing and exporting it.',
+    description: 'Turns a photo of code into a usable source file. A FastAPI backend extracts and cleans the text, with a Vite/React frontend for capturing, reviewing and exporting it.',
     html_url: 'https://github.com/Hussain2111/CodeLens',
     homepage: null,
     tags: ['Python', 'FastAPI', 'React', 'Vite'],
-  },
-  {
-    name: 'Cairn',
-    description: 'A personal planning tool that breaks big goals into stages that unlock one at a time, so there is always exactly one next small task to do. Built-in spaced-repetition review keeps what you learn from slipping away.',
-    html_url: 'https://github.com/Hussain2111/Cairn',
-    homepage: 'https://hussain2111.github.io/Cairn/',
-    tags: ['JavaScript', 'PWA'],
   },
   {
     name: 'NeuroTrade',
