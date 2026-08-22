@@ -110,7 +110,7 @@ const PINNED_PROJECTS = [
     name: 'Fina',
     description: 'Full-stack personal finance tracker (NestJS + React) with budgets, savings goals, multi-currency support, CSV bank import, and AI-driven spending insights.',
     html_url: 'https://github.com/Hussain2111/Fina',
-    homepage: null,
+    homepage: 'https://fina-beige.vercel.app',
     language: 'TypeScript',
   },
   {
