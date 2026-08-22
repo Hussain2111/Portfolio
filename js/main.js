@@ -83,74 +83,73 @@ const PINNED_PROJECTS = [
     description: 'An Instagram coach that pulls your own account’s analytics straight from the Graph API, benchmarks them against a scraped competitor pool, and surfaces the one gap worth fixing next — with the numbers behind every claim.',
     html_url: 'https://github.com/Hussain2111/trellis',
     homepage: null,
-    language: 'TypeScript',
+    tags: ['TypeScript', 'Next.js', 'Postgres', 'Vercel'],
   },
   {
     name: 'CodeLens',
     description: 'Turns a photo of code into a usable source file — a FastAPI backend extracts and cleans the text, with a Vite/React frontend for capturing, reviewing and exporting it.',
     html_url: 'https://github.com/Hussain2111/CodeLens',
     homepage: null,
-    language: 'Python',
+    tags: ['Python', 'FastAPI', 'React', 'Vite'],
   },
   {
     name: 'Cairn',
     description: 'A personal planning tool that breaks big goals into stages that unlock one at a time, so there is always exactly one next small task to do. Built-in spaced-repetition review keeps what you learn from slipping away.',
     html_url: 'https://github.com/Hussain2111/Cairn',
     homepage: 'https://hussain2111.github.io/Cairn/',
-    language: 'JavaScript',
+    tags: ['JavaScript', 'PWA'],
   },
   {
     name: 'NeuroTrade',
     description: 'A stock market prediction platform combining classic ML and deep learning (LSTM/GRU) with a data pipeline for collection, backtesting and evaluation, plus a web dashboard for visualizing predictions.',
     html_url: 'https://github.com/Hussain2111/NeuroTrade',
-    homepage: null,
-    language: 'Python',
+    homepage: 'https://neuro-trade-ten.vercel.app',
+    tags: ['Python', 'Flask', 'TensorFlow', 'MongoDB'],
   },
   {
     name: 'Fina',
     description: 'Full-stack personal finance tracker (NestJS + React) with budgets, savings goals, multi-currency support, CSV bank import, and AI-driven spending insights.',
     html_url: 'https://github.com/Hussain2111/Fina',
     homepage: 'https://fina-beige.vercel.app',
-    language: 'TypeScript',
+    tags: ['TypeScript', 'NestJS', 'PostgreSQL'],
   },
   {
     name: 'Verisign',
     description: 'A blockchain content-authentication platform on Algorand: anyone can create an immutable, timestamped signature for a piece of content, and verified organizations issue non-transferable credentials so a signature can show who actually stands behind it. Includes a Chrome extension for in-page verification.',
     html_url: 'https://github.com/Hussain2111/verisign',
     homepage: 'https://veri-sign-wine.vercel.app',
-    language: 'TypeScript',
+    tags: ['TypeScript', 'Next.js', 'Algorand'],
   },
 ];
 
 function projectCard(repo) {
   const description = repo.description || 'No description yet.';
   const homepage = repo.homepage && repo.homepage.trim() ? repo.homepage.trim() : null;
+  const tags = repo.tags && repo.tags.length ? repo.tags : (repo.language ? [repo.language] : []);
 
   const card = document.createElement('article');
   card.className = 'project-card';
   card.innerHTML = `
     <div class="project-card-top">
       <h3>${escapeHtml(repo.name)}</h3>
-      <a class="card-link" href="${repo.html_url}" target="_blank" rel="noopener noreferrer" aria-label="View ${escapeHtml(repo.name)} on GitHub">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.26 9.28 7.78 10.78.57.1.78-.25.78-.55 0-.27-.01-1.15-.02-2.09-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.29.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.35-2.65 5.31-5.18 5.59.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55 4.52-1.51 7.77-5.76 7.77-10.78C23.25 5.48 18.27.5 12 .5Z"/></svg>
-      </a>
+      <div class="project-card-links">
+        <a class="card-link" href="${repo.html_url}" target="_blank" rel="noopener noreferrer" aria-label="View ${escapeHtml(repo.name)} on GitHub">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.26 9.28 7.78 10.78.57.1.78-.25.78-.55 0-.27-.01-1.15-.02-2.09-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.29.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.35-2.65 5.31-5.18 5.59.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55 4.52-1.51 7.77-5.76 7.77-10.78C23.25 5.48 18.27.5 12 .5Z"/></svg>
+        </a>
+        ${homepage ? `
+        <a class="card-link" href="${homepage}" target="_blank" rel="noopener noreferrer" aria-label="Open live demo of ${escapeHtml(repo.name)}">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7M21 3l-9 9M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+        </a>` : ''}
+      </div>
     </div>
     <p>${escapeHtml(description)}</p>
     <div class="project-card-bottom">
-      ${repo.language ? `<span class="project-lang">${escapeHtml(repo.language)}</span>` : ''}
+      ${tags.length ? `
+      <div class="project-tags">
+        ${tags.map((tag) => `<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}
+      </div>` : ''}
     </div>
   `;
-
-  if (homepage) {
-    const link = document.createElement('a');
-    link.className = 'card-link';
-    link.href = homepage;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-label', `Open live demo of ${repo.name}`);
-    link.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7M21 3l-9 9M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>';
-    card.querySelector('.project-card-top').appendChild(link);
-  }
 
   return card;
 }

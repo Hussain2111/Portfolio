@@ -395,12 +395,20 @@ section.section {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
 .project-card h3 {
   font-size: 1.05rem;
   margin: 0;
+}
+
+.project-card-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .project-card a.card-link {
@@ -416,9 +424,19 @@ section.section {
   flex-grow: 1;
 }
 
-.project-lang {
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-tag {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
   color: var(--accent);
 }
 
