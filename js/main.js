@@ -67,15 +67,24 @@ const GITHUB_USER = 'Hussain2111';
 const MAX_PROJECTS = 6;
 
 // Repos to hide entirely: the portfolio itself, the profile-readme repo,
-// retired experiments, and work-in-progress projects not ready to show yet.
+// and retired experiments.
 const EXCLUDE = new Set(
-  ['Portfolio', GITHUB_USER, 'Gaia', 'rosterforge', 'trellis'].map((n) => n.toLowerCase())
+  ['Portfolio', GITHUB_USER, 'Gaia', 'rosterforge'].map((n) => n.toLowerCase())
 );
 
-// Hand-curated cards for the projects worth leading with. These always show
-// (with this copy and these links) regardless of what the GitHub API returns
-// for them, so a repo's raw metadata drifting never changes what visitors see.
+// Hand-curated cards for the projects worth leading with, in display order
+// (grid fills left-to-right, so this array's order is the on-page order).
+// These always show with this copy and these links regardless of what the
+// GitHub API returns for them, so a repo's raw metadata drifting never
+// changes what visitors see.
 const PINNED_PROJECTS = [
+  {
+    name: 'Trellis',
+    description: 'An Instagram coach that pulls your own account’s analytics straight from the Graph API, benchmarks them against a scraped competitor pool, and surfaces the one gap worth fixing next — with the numbers behind every claim.',
+    html_url: 'https://github.com/Hussain2111/trellis',
+    homepage: null,
+    language: 'TypeScript',
+  },
   {
     name: 'CodeLens',
     description: 'Turns a photo of code into a usable source file — a FastAPI backend extracts and cleans the text, with a Vite/React frontend for capturing, reviewing and exporting it.',
@@ -104,22 +113,12 @@ const PINNED_PROJECTS = [
     homepage: null,
     language: 'TypeScript',
   },
-];
-
-// Extra cards used only to fill out the grid when the GitHub API is
-// unreachable or rate-limited (on top of the pinned projects above).
-const FALLBACK_EXTRA = [
   {
-    name: 'Barbican',
-    description: 'A self-service edge platform: Envoy proxies dynamically configured over xDS by a Python control plane, with a provisioning API for public routes.',
-    html_url: 'https://github.com/Hussain2111/Barbican',
-    language: 'Python',
-  },
-  {
-    name: 'Aurora',
-    description: 'AI voice assistant for GP surgeries with real-time calls, live transcription, WebSocket audio streaming, and a clinician dashboard — deployed on Azure.',
-    html_url: 'https://github.com/Hussain2111/Aurora',
-    language: 'JavaScript',
+    name: 'Verisign',
+    description: 'A blockchain content-authentication platform on Algorand: anyone can create an immutable, timestamped signature for a piece of content, and verified organizations issue non-transferable credentials so a signature can show who actually stands behind it. Includes a Chrome extension for in-page verification.',
+    html_url: 'https://github.com/Hussain2111/verisign',
+    homepage: null,
+    language: 'TypeScript',
   },
 ];
 
@@ -206,7 +205,7 @@ async function loadProjects() {
     renderProjects(buildProjectList(live));
   } catch (err) {
     console.warn('Falling back to static project list:', err);
-    renderProjects([...PINNED_PROJECTS, ...FALLBACK_EXTRA].slice(0, MAX_PROJECTS));
+    renderProjects(PINNED_PROJECTS.slice(0, MAX_PROJECTS));
   }
 }
 
