@@ -66,29 +66,49 @@ document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el))
 const GITHUB_USER = 'Hussain2111';
 const MAX_PROJECTS = 6;
 
-// Repos to skip: the portfolio itself and the profile-readme repo.
-const EXCLUDE = new Set(['Portfolio', GITHUB_USER]);
+// Repos to hide entirely: the portfolio itself, the profile-readme repo,
+// retired experiments, and work-in-progress projects not ready to show yet.
+const EXCLUDE = new Set(
+  ['Portfolio', GITHUB_USER, 'Gaia', 'rosterforge', 'trellis'].map((n) => n.toLowerCase())
+);
 
-// Fallback used if the GitHub API is unreachable or rate-limited.
-const FALLBACK_PROJECTS = [
-  {
-    name: 'trellis',
-    description: 'An Instagram coach that benchmarks your posts against your niche, names the one gap worth fixing, and drafts content to close it — with the receipts behind every claim.',
-    html_url: 'https://github.com/Hussain2111/trellis',
-    language: 'TypeScript',
-  },
+// Hand-curated cards for the projects worth leading with. These always show
+// (with this copy and these links) regardless of what the GitHub API returns
+// for them, so a repo's raw metadata drifting never changes what visitors see.
+const PINNED_PROJECTS = [
   {
     name: 'CodeLens',
-    description: 'Turns photos of code into usable source files: a FastAPI backend extracts code from images, with a Vite/React frontend for capturing and reviewing it.',
+    description: 'Turns a photo of code into a usable source file — a FastAPI backend extracts and cleans the text, with a Vite/React frontend for capturing, reviewing and exporting it.',
     html_url: 'https://github.com/Hussain2111/CodeLens',
+    homepage: null,
     language: 'Python',
   },
   {
     name: 'Cairn',
-    description: 'A personal roadmap tool. Break every thread into stages that unlock in sequence, and always see the next small thing.',
+    description: 'A personal planning tool that breaks big goals into stages that unlock one at a time, so there is always exactly one next small task to do. Built-in spaced-repetition review keeps what you learn from slipping away.',
     html_url: 'https://github.com/Hussain2111/Cairn',
+    homepage: 'https://hussain2111.github.io/Cairn/',
     language: 'JavaScript',
   },
+  {
+    name: 'NeuroTrade',
+    description: 'A stock market prediction platform combining classic ML and deep learning (LSTM/GRU) with a data pipeline for collection, backtesting and evaluation, plus a web dashboard for visualizing predictions.',
+    html_url: 'https://github.com/Hussain2111/NeuroTrade',
+    homepage: null,
+    language: 'Python',
+  },
+  {
+    name: 'Fina',
+    description: 'Full-stack personal finance tracker (NestJS + React) with budgets, savings goals, multi-currency support, CSV bank import, and AI-driven spending insights.',
+    html_url: 'https://github.com/Hussain2111/Fina',
+    homepage: null,
+    language: 'TypeScript',
+  },
+];
+
+// Extra cards used only to fill out the grid when the GitHub API is
+// unreachable or rate-limited (on top of the pinned projects above).
+const FALLBACK_EXTRA = [
   {
     name: 'Barbican',
     description: 'A self-service edge platform: Envoy proxies dynamically configured over xDS by a Python control plane, with a provisioning API for public routes.',
@@ -100,12 +120,6 @@ const FALLBACK_PROJECTS = [
     description: 'AI voice assistant for GP surgeries with real-time calls, live transcription, WebSocket audio streaming, and a clinician dashboard — deployed on Azure.',
     html_url: 'https://github.com/Hussain2111/Aurora',
     language: 'JavaScript',
-  },
-  {
-    name: 'Fina',
-    description: 'Full-stack personal finance tracker with budgets, savings goals, multi-currency support, CSV bank import, and AI-driven spending insights.',
-    html_url: 'https://github.com/Hussain2111/Fina',
-    language: 'TypeScript',
   },
 ];
 
@@ -168,6 +182,14 @@ function renderProjects(repos) {
   });
 }
 
+// Pinned projects always lead the grid; remaining slots are filled with
+// whatever else is most recently pushed on GitHub (excluding pinned/hidden repos).
+function buildProjectList(liveRepos) {
+  const pinnedNames = new Set(PINNED_PROJECTS.map((p) => p.name.toLowerCase()));
+  const rest = liveRepos.filter((r) => !pinnedNames.has(r.name.toLowerCase()));
+  return [...PINNED_PROJECTS, ...rest].slice(0, MAX_PROJECTS);
+}
+
 async function loadProjects() {
   try {
     const res = await fetch(
@@ -177,15 +199,14 @@ async function loadProjects() {
     if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
 
     const repos = await res.json();
-    const filtered = repos
-      .filter((r) => !r.fork && !r.archived && !r.private && !EXCLUDE.has(r.name))
-      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
-      .slice(0, MAX_PROJECTS);
+    const live = repos
+      .filter((r) => !r.fork && !r.archived && !r.private && !EXCLUDE.has(r.name.toLowerCase()))
+      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
 
-    renderProjects(filtered.length ? filtered : FALLBACK_PROJECTS);
+    renderProjects(buildProjectList(live));
   } catch (err) {
     console.warn('Falling back to static project list:', err);
-    renderProjects(FALLBACK_PROJECTS);
+    renderProjects([...PINNED_PROJECTS, ...FALLBACK_EXTRA].slice(0, MAX_PROJECTS));
   }
 }
 
