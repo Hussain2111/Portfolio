@@ -117,7 +117,7 @@ const PINNED_PROJECTS = [
     name: 'Verisign',
     description: 'A blockchain content-authentication platform on Algorand: anyone can create an immutable, timestamped signature for a piece of content, and verified organizations issue non-transferable credentials so a signature can show who actually stands behind it. Includes a Chrome extension for in-page verification.',
     html_url: 'https://github.com/Hussain2111/verisign',
-    homepage: null,
+    homepage: 'https://veri-sign-wine.vercel.app',
     language: 'TypeScript',
   },
 ];
