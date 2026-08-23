@@ -94,10 +94,10 @@ const PINNED_PROJECTS = [
   },
   {
     name: 'CodeLens',
-    description: 'Turns a photo of code into a usable source file. A FastAPI backend extracts and cleans the text, with a Vite/React frontend for capturing, reviewing and exporting it.',
+    description: 'A phone PWA that photographs code on a screen or whiteboard and returns clean, selectable text: a FastAPI backend calls Gemini’s vision model to extract it, rate-limited to protect a shared free-tier quota. An optional VS Code extension pairs with the phone over a self-signed local WebSocket connection, so extracted code can land directly in an editor tab.',
     html_url: 'https://github.com/Hussain2111/CodeLens',
-    homepage: null,
-    tags: ['Python', 'FastAPI', 'React', 'Vite'],
+    homepage: 'https://code-lens-navy.vercel.app',
+    tags: ['Python', 'FastAPI', 'React', 'Gemini AI'],
   },
   {
     name: 'NeuroTrade',
